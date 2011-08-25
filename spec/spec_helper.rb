@@ -6,6 +6,7 @@ $LOAD_PATH.unshift(File.expand_path File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.expand_path File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'sinatra/base'
 require 'sinatra/form_helpers'
+require 'sinatra/form_helpers/erubis'
 
 class TestFormHelpers
   include Sinatra::FormHelpers
@@ -19,6 +20,7 @@ end
 
 class Application < Sinatra::Base
   helpers Sinatra::FormHelpers
+  Tilt.register Sinatra::FormHelpers::ErubisTemplate, 'erb'
   set :raise_errors, false
   set :show_exceptions, false
 end
