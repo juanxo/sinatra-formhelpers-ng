@@ -34,6 +34,10 @@ Gem::Specification.new do |s|
   s.rubygems_version = "1.8.25"
   s.summary = "Form helpers for Sinatra"
 
+  s.add_development_dependency('rake')
+  s.add_development_dependency('sinatra')
+  s.add_development_dependency('jeweler')
+
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
