@@ -1,98 +1,139 @@
-Sinatra::FormHelpers - Lightweight form helpers for Sinatra
-===========================================================
+# `Sinatra::FormHelpers`
 
-This plugin adds lightweight (3-5 lines each) form helpers to Sinatra that aid with
-common form and HTML tags.
+**There are one or two bugs in here at the moment, and I'm currently doing
+README-driven-development,** which might make using `master` a real pain,
+especially with HAML. In the meanwhile, check out the docs for [`1.9.1`][1.9.1]
 
-    link "google", "http://www.google.com"  # <a href="http://www.google.com">google</a>
-    label :person, :first_name              # <label for="person_first_name">First Name</label>
-    input :person, :first_name              # <input name="person[first_name]" id="person_first_name" type="text" />
+ [1.9.1]:https://github.com/duijf/sinatra-formhelpers-ng/tree/7d086244e077c6826557d090194cf9840b3ff167
 
-There are also helpers for: form, textarea, submit, image, radio, checkbox, and select
+This gem provide lightweight form helpers for Sinatra that will aid you
+create forms more easily.
 
-Why Bother?
------------
-After all, you can just write Haml or write your own helpers or hand-code raw HTML or whatever.  Well, here's some considerations:
+Instead of writing this;
 
-1. Helpers maintain correct state across form submissions (eg, on errors, form stays filled in)
-2. Generate automatic labels, valid CSS ID's, and <code>nested[names]</code> to make ORMs happy
-3. No Rails ultra-magic(tm) here. Just fast, simple code.
+```haml
+%label{ for: 'person_first_name' } First Name
+%input{ name: 'person[first_name]' id: 'person_first_name' value: @person.first_name }
+```
 
-Usage
------
-With Bundler/Isolate:
+with this gem you'll be able to write this:
 
-    gem 'sinatra-formhelpers-ng'
+```haml
+= label :person, :first_name
+= input :person, :first_name
+```
 
-Then, include it in a Sinatra application:
+There are many more helpers to choose from, and there are even more benefits to
+using this. Scroll on!
 
-    require 'sinatra/form_helpers'
+## Additional benefits
 
-If you're subclassing <code>Sinatra::Base</code>, you also need to call <code>helpers</code> manually:
+1. Helpers maintain correct state across form submissions. An erroneously filled
+   form is still filled in when you show it to the user.
+2. The helpers automatically generate labels, CSS ID's and the `nested[names]`
+   that make ORMs happy.
+3. No without Rails Ultra-Magic&#x2122;. Just simple code that you can comprehend.
+4. **In the near future:** Declare framework specific CSS classes to be used.
+   Get Bootstrap or Foundation forms without the hassle.
 
-    class MyApp < Sinatra::Base
-      helpers Sinatra::FormHelpers
-      # ...
-    end
+## Installation and usage
 
-Views
------
-In your views, use these helpers to dynamically create form HTML elements.  Here's an example in ERB:
+Install with Bundler by adding the following to your `Gemfile`:
 
-    <p>
-      Fill out the below form to sign up.
-      For more information, visit our <%= link 'FAQ', '/faq' %>
-    </p>
+```ruby
+gem 'sinatra-formhelpers-ng'
+```
 
-    <%= form('/users', :post) %>
-    
-    <%= input(:user, :first_name) %>
-    <%= input(:user, :last_name) %>
+Then, include it in your Sinatra application:
 
-    <%= input(:user, :email, :size => 40) %>
+```ruby
+require 'sinatra/form_helpers'
+```
 
-    <%= password(:user, :password) %>
-    <%= password(:user, :confirm_password) %>
+If you are subclassing `Sinatra::Base`, in what is referred to as the modular
+style, then you need to tell Sinatra where to find the helpers that this
+gem provides:
 
-    <%= radio(:user, :gender, ['M', 'F']) %>
+```ruby
+class MyApp < Sinatra::Base
+  helpers Sinatra::FormHelpers
+  # ...
+end
+```
 
-    <%= submit %>
+## Using the helpers in your views
 
-Unlike the super-magic Rails <code>form\_for</code> method, the <code>form()</code> helper just takes a URL and method. (Note that <code>form()</code> will accept <code>:create</code>, <code>:update</code>, and <code>:delete</code> and include the special <code>\_method</code> hidden param for you.)
+If you've followed the steps above, you are ready to use the helpers in your
+views to create the HTML elements. Below you will find a tutorial that also
+serves as an API reference. **This is incomplete for now.**
 
-To reduce repetition, use <code>fieldset()</code> to prefix fields with a namespace:
+### `form(:action '/url', &block)`
 
-    <%= form('/users', :create) %>
+`form(:action, "/url", &block)` takes a string, an atom and a block and
+returns a string which will contain the form.
 
-    <% fieldset(:user) do |f| %>
-      <%= f.input(:first_name) %>
-      <%= f.input(:last_name) %>
+The action can be one of `:create`, `:update` or `:delete`. Again, the helper
+will open a form and even include the hidden parameter `_method` for you (which
+helps older browsers implement HTTP verbs like `PUT`).
 
-      <%= f.input(:email, :size => 40) %>
+The URL can be anything you want it to be. Just make sure to define an endpoint
+for it in your Sinatra app.
 
-      <%= f.password(:password) %>
-      <%= f.password(:confirm_password) %>
+The block will be evaluated, and will be the content of your form.
 
-      <%= f.radio(:gender, ['M', 'F']) %>
-    <% end %>
+```haml
+= form('/users', :create) do |f|
+ -# Form code goes here
+```
 
-    <%= submit 'Create account' %>
-    <%= submit 'Cancel', :onclick => 'window.location=http://mydomain.com;return false' %>
+Will return the following:
 
-This will create fields named <code>user[first\_name]</code>, <code>user[last\_name]<code>, and so forth.
+```html
+<form method="post" action="/url">
+  <!-- Form content -->
+</form>
+```
 
-Known Bugs
-----------
-* Currently <code>fieldset</code> does not return a <fieldset> tag properly.
+### `fieldset(:model, &block)`
 
+**This subsection and the rest of this section is a TODO.**
 
-Fixed Bugs
-----------
-* The state of select tags was not persisted across form submissions.
+## Bugs and whishlist
 
+* The `fieldset` helper currently **does not** return a `<fieldset>` tag properly,
+  which makes the gem rather useless with HAML. This will get fixed **very**
+  soon.
+* Hooks for custom CSS classes to make it easier to utilize CSS frameworks
+  like Bootstrap or Foundation.
+* The tests are rather monolythic. These might benefit from being split up
+  into multiple files.
 
-Authors
--------
-* [Initial efforts](https://github.com/twilson63/sinatra-formhelpers) (c) 2009 [Tom Wilson](https://github.com/twilson63).
-* [Additional efforts](https://github.com/nateware/sinatra-formhelpers) (c) 2011 [Nate Wiger](http://nateware.com).
-* Further efforts (c) 2013 [Cymen Vig](http://blog.cymen.org/).
+## Contributing
+
+Contributions are most welcome! If you are experienced and you know what to
+do, get cracking!
+
+If you're not, here's your game plan:
+
+1. Fork and create a branch.
+2. Write code, docs or tests and create commits.
+3. Afterwards, do a `git rebase -i master` to reword commit messages, and
+   resolve merge conflicts if any.
+
+If you are unsure about any of the above, but still would like to do something,
+don't hesitate to send me an email. I can't promise an immediate reaction, but
+I don't bite.
+
+## Authors and maintainers
+
+* [Tom Wilson](http://github.com/twilson63), 2009 - 2011
+  ([old repo](https://github.com/twilson63/sinatra-formhelpers)))
+* [Nate Wiger](http://nateware.com/), 2011 - 2013
+* [Cymen Vig](http://blog.cymen.org/), 2013 - 2015
+  ([old repo](https://github.com/cymen/sinatra-formhelpers-ng))
+* [Laurens Duijvesteijn](http://duijf.org/), 2015 onwards
+
+## License
+
+This project is licenced under the MIT license. You can find a copy in the
+`LICENSE` file.
