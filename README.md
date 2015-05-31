@@ -1,6 +1,6 @@
 # `Sinatra::FormHelpers`
 
-[![Build Status](https://travis-ci.org/duijf/sinatra-formhelpers-ng.svg)](https://travis-ci.org/duijf/sinatra-formhelpers-ng) [![Gem Version](https://badge.fury.io/rb/sinatra-formhelpers-ng.svg)](http://badge.fury.io/rb/sinatra-formhelpers-ng)
+[![Gem Version](https://badge.fury.io/rb/sinatra-formhelpers-ng.svg)](http://badge.fury.io/rb/sinatra-formhelpers-ng) [![Build Status](https://travis-ci.org/duijf/sinatra-formhelpers-ng.svg)](https://travis-ci.org/duijf/sinatra-formhelpers-ng) [![Code Climate](https://d3s6mut3hikguw.cloudfront.net/github/duijf/sinatra-formhelpers-ng/badges/gpa.svg)](https://codeclimate.com/github/duijf/sinatra-formhelpers-ng) [![Docs](https://inch-ci.org/github/duijf/sinatra-formhelpers-ng.svg?branch=master&style=flat)](https://inch-ci.org/github/duijf/sinatra-formhelpers-ng)
 
 **There are one or two bugs in here at the moment, and I'm currently doing
 README-driven-development,** which might make using `master` a real pain,
