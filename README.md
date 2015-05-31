@@ -1,5 +1,7 @@
 # `Sinatra::FormHelpers`
 
+[![Build Status](https://travis-ci.org/duijf/sinatra-formhelpers-ng.svg)](https://travis-ci.org/duijf/sinatra-formhelpers-ng) [![Gem Version](https://badge.fury.io/rb/sinatra-formhelpers-ng.svg)](http://badge.fury.io/rb/sinatra-formhelpers-ng)
+
 **There are one or two bugs in here at the moment, and I'm currently doing
 README-driven-development,** which might make using `master` a real pain,
 especially with HAML. In the meanwhile, check out the docs for [`1.9.1`][1.9.1]
