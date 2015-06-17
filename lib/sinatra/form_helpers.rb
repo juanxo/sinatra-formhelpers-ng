@@ -137,15 +137,20 @@ module Sinatra
 
     # Create a HTML element with an open and close tag.
     #
-    # Usage:
+    # @param name [Symbol] the name of the tag.
+    # @param content [String] the content of the tag.
+    # @param attributes [Hash] the HTML attributes of the tag.
     #
-    #     tag :h1, "foo", :title => "bar"
-    #     => "<h1 title="bar">foo</h1>"
-    def tag(name, content, options={})
+    # @return [String] the generated HTML tag.
+    #
+    # @example Generate a HTML tag
+    #     tag :h1, "My awesome title", class: "page-title"
+    #     #=> "<h1 class=\"page-title\">My awesome title</h1>"
+    def tag(name, content, attributes={})
       unless content.nil?
-        "<#{name.to_s} #{hash_to_html_attrs(options)}>#{content}</#{name.to_s}>"
+        "<#{name.to_s} #{hash_to_html_attrs(attributes)}>#{content}</#{name.to_s}>"
       else
-        "<#{name.to_s} #{hash_to_html_attrs(options)}>"
+        "<#{name.to_s} #{hash_to_html_attrs(attributes)}>"
       end
     end
 
