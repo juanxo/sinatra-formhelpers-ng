@@ -146,6 +146,7 @@ module Sinatra
     # @example Generate a HTML tag
     #     tag :h1, "My awesome title", class: "page-title"
     #     #=> "<h1 class=\"page-title\">My awesome title</h1>"
+    #
     def tag(name, content, attributes={})
       unless content.nil?
         "<#{name.to_s} #{hash_to_html_attrs(attributes)}>#{content}</#{name.to_s}>"
@@ -177,6 +178,16 @@ module Sinatra
       end
     end
 
+    # Transform a Ruby hash into a HTML attribute string.
+    #
+    # @param options [Hash] key-value hash of the options to transform.
+    #
+    # @return [String] the generated HTML attribute string.
+    #
+    # @example Create a HTML attribute string
+    #     hash_to_html_attrs href: '/some/url', id: 'some-id'
+    #     #=> "href=\"/some/url\" id=\"some-id\""
+    #
     def hash_to_html_attrs(options={})
       html_attrs = ""
       options.keys.sort.each do |key|
