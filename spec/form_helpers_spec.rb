@@ -191,15 +191,6 @@ describe "Sinatra::FormHelpers in app" do
     last_response.body.should == %q(<textarea id="person_notes" name="person[notes]">This is a note</textarea>)
   end
 
-  it 'renders a textarea tag with @params' do
-    app.get '/img' do
-      erb "<%= image '/images/hello.png', :alt => 'Lolcatz' %>"
-    end
-
-    get '/img'
-    last_response.body.should == '<img alt="Lolcatz" src="/images/hello.png" />'
-  end
-
   it 'renders an input tag with a submit type' do
     app.get '/sub' do
       erb "<%= submit 'Create' %>"

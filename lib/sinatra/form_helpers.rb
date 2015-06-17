@@ -38,11 +38,6 @@ module Sinatra
       tag :a, content, options.merge(:href => href)
     end
 
-    # Link to an image
-    def image(src, options={})
-      single_tag :img, options.merge(:src => src)
-    end
-
     # Form field label
     def label(obj, field, display = "", options={})
       tag :label, (display.nil? || display == '') ? titleize(field.to_s) : display, options.merge(:for => css_id(obj, field))
