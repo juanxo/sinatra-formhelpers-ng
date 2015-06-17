@@ -16,7 +16,7 @@ module Sinatra
       # the docs suggest using ':create', ':update', or ':delete'
       # but you can use any symbol for the method value
       # allows for more than 3 forms on a single page
-      if method.is_a? Symbol      
+      if method.is_a? Symbol
         method_input = %Q(<input type="hidden" name="_method" value="#{method}" />)
         method = :post
       end
@@ -140,13 +140,18 @@ module Sinatra
       input(obj, field, options.merge(:type => 'hidden'))
     end
 
-    # Standard open and close tags
-    # EX : tag :h1, "shizam", :title => "shizam"
-    # => <h1 title="shizam">shizam</h1>
+    # Create a HTML element with an open and close tag.
+    #
+    # Usage:
+    #
+    #     tag :h1, "foo", :title => "bar"
+    #     => "<h1 title="bar">foo</h1>"
     def tag(name, content, options={})
-      "<#{name.to_s}" +
-        (options.length > 0 ? " #{hash_to_html_attrs(options)}" : '') +
-        (content.nil? ? '>' : ">#{content}</#{name}>")
+      unless content.nil?
+        "<#{name.to_s} #{hash_to_html_attrs(options)}>#{content}</#{name.to_s}>"
+      else
+        "<#{name.to_s} #{hash_to_html_attrs(options)}>"
+      end
     end
 
     # Standard single closing tags
