@@ -1,15 +1,19 @@
 require 'bundler/gem_tasks'
 require 'rake/clean'
 require 'fileutils'
-require 'yard'
 require 'rake'
 
-desc "Run the tests"
-task :spec do
-  sh "bacon spec/*_spec.rb"
+begin
+  require 'yard'
+  YARD::Rake::YardocTask.new
+rescue LoadError
 end
 
-YARD::Rake::YardocTask.new
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
+rescue LoadError
+end
 
 task :test => :spec
 task :default => :test
