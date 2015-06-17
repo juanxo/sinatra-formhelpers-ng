@@ -24,9 +24,9 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "bundler", "~> 1.6"
   gem.add_development_dependency "rake", "~> 10.0"
   gem.add_development_dependency "sinatra", "~> 1.4"
-  gem.add_development_dependency "bacon", "~> 1.2"
   gem.add_development_dependency "rack-test", "~> 0.6"
   gem.add_development_dependency "codeclimate-test-reporter", ">= 0"
   gem.add_development_dependency "yard", "~> 0.8"
+  gem.add_development_dependency "rspec", "~> 3.3"
 end
 
