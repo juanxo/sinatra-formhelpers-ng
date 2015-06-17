@@ -27,5 +27,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "bacon", "~> 1.2"
   gem.add_development_dependency "rack-test", "~> 0.6"
   gem.add_development_dependency "codeclimate-test-reporter", ">= 0"
+  gem.add_development_dependency "yard", "~> 0.8"
 end
 
