@@ -20,10 +20,11 @@ module Sinatra
         method_input = %Q(<input type="hidden" name="_method" value="#{method}" />)
         method = :post
       end
+      prefix = options.delete(:prefix)
       action = "/#{action}" if action.is_a? Symbol
 
       out = tag(:form, nil, {:action => action, :method => method.to_s.upcase}.merge(options)) + method_input
-      out << fieldset(action, &block) + '</form>' if block_given?
+      out << fieldset(prefix || action, &block) + '</form>' if block_given?
       out
     end
 
